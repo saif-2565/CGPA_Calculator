@@ -1,0 +1,99 @@
+#include<iostream>
+#include<string>  // for string
+#include <cmath>  // for round
+using namespace std;
+
+// to check grade points acc to grade
+double points(string grade) 
+{
+	double point;
+	if( grade == "A" ) point = 4.0;
+	else if( grade == "A-" ) point = 3.7;
+	else if( grade == "B+" ) point = 3.3;
+	else if( grade == "B"  ) point = 3.0;
+	else if( grade == "B-" ) point = 2.7;
+	else if( grade == "C+" ) point = 2.3;
+	else if( grade == "C"  ) point = 2.0;
+	else if( grade == "C-" ) point = 1.7;
+	else if( grade == "D"  ) point = 1.0;
+	else if( grade == "F"  ) point = 0.0;
+
+	return point;
+}
+
+
+int main()
+{
+	int numSubject, totalCH=0, semester; 
+	double gpa=0.0, cgpa = 0.0;
+	
+	cout << "Enter semester number:\t";   cin >> semester;
+	double *semGpa = new double[semester];
+	for(int s=0; s < semester-1; s++)
+	{	
+		cout << "Enter GPA of semester " << s+1 << ": ";
+		cin >> semGpa[s];
+	}
+	cout << "\nFOR CURRENT SEMESTER\n";
+	cout << "Enter the number of subjects(th+lab=total)\n";
+	cin >> numSubject;
+	
+	string *nameSubject = new string[numSubject];
+	double *subjectGpa = new double[numSubject];
+	string *grade = new string [numSubject];
+	int *creditHours = new int[numSubject];
+
+    for(int i = 0; i < numSubject; i++)
+    {
+		cout << "For subject " << i+1;
+		cout << "\nEnter name: ";
+		cin >> nameSubject[i];
+		
+		cout << "Enter credit hours: ";
+		cin >> creditHours[i];
+		
+		cout << "Enter grade: ";
+		cin >> grade[i];
+
+    	// call func. to check points 
+		subjectGpa[i] = points(grade[i]);
+		
+		// update gpa 
+		gpa += subjectGpa[i] * creditHours[i];
+		totalCH += creditHours[i];
+	}
+
+	// final gpa and update cgpa 
+	gpa /= totalCH;
+	gpa = round( cgpa * 100) / 100;
+
+	// to print headings 
+	cout << "number of subjects:\t" << numSubject <<endl;
+	cout << "Subjects \t Grade \t GPA \t Credit hours \n" ;
+	
+	// to print all the attributes 
+	for( int i=0; i < numSubject; i++)
+	{
+		cout << nameSubject[i] << "  \n\t\t  ";
+		cout << grade[i] << "  \t  ";
+		cout << subjectGpa[i] << "  \t  ";
+		cout << creditHours[i] << "  \n";	
+	}
+	cout << "GPA of current semester:\t" << gpa <<endl;
+	cout << "total credit hours of current semester:\t" << totalCH <<endl;
+
+	// to find total CGPA and print it
+	for(int s=0; s < semester; s++)
+	{	
+		cgpa += semGpa[s];
+	}
+	cgpa += gpa;
+	cgpa /= semester;
+	cgpa = round( cgpa * 100) / 100;
+	cout << "CGPA of all semester:\t" << cgpa;
+
+	cout << "\nTHANKS TO VISIT HERE!\n";
+	cout << "Please leave your comment.";
+	
+	return 27072025;
+}
